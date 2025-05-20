@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>If We Could Sit Once Again</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="introPage" class="page">
+        <div class="intro-box">
+            <div id="introPart1">
+                <p class="intro-text">
+                    Some things are not meant to be said in a message<br>
+                    Some things are not loud… but they're still true<br>
+                    Some stories aren’t meant to be told in noise…
+                    They bloom best in silence in spaces where the heart listens<br><br>
+                    This isn’t a story about the past<br>
+                    What you’re about to see isn’t just a message<br>
+                    It’s a doorway gently opened…
+                    Into a part of my heart that still carries warmth,
+                    And a little hope, softly folded in every word
+                </p>
+                <button class="continue-btn" id="nextIntroPart">Next</button>
+            </div>
+
+            <div id="introPart2" class="hidden">
+                <p class="intro-text">
+                    It’s about what still echoes quietly and patiently. This isn’t here to change the past,
+                    It’s here to honor it.
+                    To understand what was, and maybe…
+                    feel what still quietly lingers beneath<br><br>
+                    So take a breath,
+                    read slowly not with your mind, but with your heart and soul<br><br>
+                    For past some days, I’ve made something for you…<br>
+                    Let me present it.<br><br>
+                    (Keep volume up and let the music speak)
+                </p>
+                <button class="continue-btn" onclick="startSequence()">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="bgMusic" src="https://github.com/Hyper468/mp3host/raw/refs/heads/main/Dooriyan%20-%20Love%20Aaj%20Kal%20128%20Kbps.mp3" preload="auto"></audio>
+
+    <div id="mainContent" class="page hidden">
+        <img id="bgImage" src="https://github.com/Hyper468/mp3host/blob/main/s.jpg?raw=true" alt="background" class="background-image">
+
+        <div id="poemTitleContainer" class="hidden">
+            <h1 id="poemTitle">If We Could Sit Once Again</h1>
+        </div>
+
+        <div id="poemContainer"></div>
+        <a href="paragraph.html" id="toParagraphBtn" class="continue-btn hidden">Continue</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

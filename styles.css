@@ -1,0 +1,340 @@
+:root {
+  --pink-beige: #F5E8E4; /* Light pink/beige for intro page */
+  --text-color: #333; /* Dark text for intro page */
+  --light-text-color: #FFF; /* Light text for poem sections */
+  --button-bg: #D4AF37; /* Gold-like button */
+  --button-hover-bg: #B8860B; /* Darker gold on hover */
+  --overlay-bg: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+}
+
+body {
+  margin: 0;
+  overflow: hidden; /* Prevent scrolling during transitions */
+  font-family: 'Georgia', serif; /* A classic, elegant font */
+  background-color: #000; /* Fallback dark background - important for the z-index issue! */
+}
+
+/* Base page styling to ensure full viewport coverage */
+.page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box; /* Include padding in element's total width and height */
+  transition: opacity 0.5s ease-in-out; /* Smooth fade for page transitions */
+}
+
+.hidden {
+  display: none !important; /* Force hide elements */
+  opacity: 0; /* Ensures it starts transparent for fade in */
+}
+
+/* --- Intro Page Styling --- */
+#introPage {
+  background-color: var(--pink-beige);
+  color: var(--text-color);
+  padding: 20px;
+}
+
+.intro-box {
+  max-width: 90%; /* Responsive width */
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white box */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Pushes content and button apart */
+  min-height: 50vh; /* Ensure enough space for content + button */
+}
+
+/* Specific styling for the intro parts */
+#introPart1, #introPart2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Make sure parts fill the box */
+}
+
+.intro-text {
+  font-size: 1.1em;
+  line-height: 1.8;
+  margin-bottom: 20px; /* Space between text and button */
+}
+
+
+/* --- Main Content Styling (Poem Page) --- */
+#mainContent {
+  position: relative; /* For positioning children */
+  background-color: transparent; /* Ensure mainContent itself is transparent so image can be seen */
+  color: var(--light-text-color);
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures image covers the entire area */
+  position: fixed; /* Stays fixed in the viewport */
+  top: 0;
+  left: 0;
+  z-index: 1; /* Changed from -1 to 1 to show above body background */
+  filter: none; /* No blur initially */
+  transition: filter 2s ease-out; /* Smooth blur transition */
+}
+
+/* --- Poem Title Styling --- */
+#poemTitleContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10; /* Set higher than background-image (1) */
+  opacity: 0; /* Hidden by default */
+  transition: opacity 1s ease-in-out; /* Smooth fade for the text */
+}
+
+#poemTitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5em; /* You might need to adjust this size down slightly if it's still too big */
+  margin: 0;
+  line-height: 1.2;
+  color: var(--light-text-color);
+  text-decoration: underline;
+  text-underline-offset: 10px;
+  text-decoration-thickness: 2px;
+
+  /* Properties to keep it on one line */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90vw; /* Limit width to prevent it from going off-screen, adjust as needed */
+}
+
+/* --- Poem Lines Styling --- */
+#poemContainer {
+  font-size: 1.8em;
+  line-height: 1.6;
+  max-width: 90%; /* Responsive width */
+  margin: 0 auto;
+  z-index: 5; /* Set higher than background-image (1) */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center each line */
+}
+
+.fade-line {
+  opacity: 0;
+  animation: fadeInPoemLine 1.5s forwards; /* Fade in animation for each line */
+  padding: 5px 0; /* Spacing between lines */
+}
+
+@keyframes fadeInPoemLine {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Paragraph Section Styling (NEW) --- */
+/* #paragraphPage uses .page and .background-image which are already defined */
+
+#paragraphTextContainer {
+  position: relative; /* For z-index to work */
+  font-size: 1.2em; /* Slightly smaller font for paragraphs */
+  line-height: 1.8;
+  max-width: 70%; /* Adjust width for better readability */
+  margin: 0 auto;
+  padding: 30px; /* Padding inside the text container */
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background for readability */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  color: var(--light-text-color);
+  text-align: justify; /* Justify text for a block-like appearance */
+  z-index: 5; /* Ensure it's above the background image */
+  transition: opacity 1s ease-in-out; /* Smooth fade for paragraphs */
+  opacity: 0; /* Hidden by default, will be revealed by JS */
+  overflow-y: auto; /* Allow scrolling if paragraph content is too long */
+  max-height: 80vh; /* Limit height to prevent overflow on very small screens */
+}
+
+#paragraphTextContainer p {
+  margin-bottom: 1.5em; /* Space between paragraphs */
+}
+
+#nextParagraphBtn {
+  position: absolute; /* Position relative to its parent .page */
+  bottom: 50px; /* Distance from the bottom */
+  z-index: 10; /* Ensure button is on top */
+  opacity: 0; /* Hidden by default, will be revealed by JS */
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* --- Common Button Styling --- */
+.continue-btn {
+  padding: 12px 30px;
+  font-size: 1.1em;
+  cursor: pointer;
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 10; /* Ensure button is clickable */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-decoration: none; /* Crucial for <a> tags to remove default underline */
+  display: inline-block; /* Crucial for <a> tags to allow padding/margin */
+}
+
+.continue-btn:hover {
+  background-color: var(--button-hover-bg);
+  transform: translateY(-2px);
+}
+
+/* --- Final Scene Styling (Main Rules) --- */
+#finalScene {
+    /* Uses .page for full screen, hidden by default */
+    background-color: transparent; /* Allows background image to show through */
+    position: relative; /* For image/text positioning */
+    display: flex; /* Use flexbox to center content */
+    flex-direction: column; /* Stack image and text vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    color: var(--light-text-color); /* Light text for the caption */
+}
+
+#finalImage {
+    max-width: 50%; /* Adjust as needed for image size */
+    max-height: 60vh; /* Limit height to prevent overflow */
+    object-fit: contain; /* Ensure the whole image is visible */
+    border-radius: 15px; /* Slightly rounded corners for the image */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Soft shadow for depth */
+    opacity: 0; /* Hidden by default, will fade in */
+    transform: translateY(20px); /* Start slightly below center for a gentle slide-in */
+    transition: opacity 2s ease-out, transform 2s ease-out; /* Smooth fade and slide */
+    z-index: 10; /* Above background, below any potential UI elements */
+}
+
+#finalImage.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Removed old #finalCaption rules here */
+
+
+/* --- New Final Text Line Styling (Base) --- */
+.final-text-line {
+    font-family: 'Georgia', serif; /* Use your body's font family */
+    font-size: 1.2em; /* This will be the base size for all lines now */
+    line-height: 1.6;
+    margin-top: 10px;
+    text-align: center;
+    color: #FFD700;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+    z-index: 7;
+}
+
+.final-text-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Specific Styling for the Main Final Line --- */
+#finalMainLine {
+    font-size: 1.8em; /* Make this line slightly larger than the others */
+    margin-bottom: 20px; /* Add some space below it */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8); /* Slightly stronger shadow for emphasis */
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    .intro-text {
+        font-size: 0.95em; /* Smaller font for smaller screens */
+    }
+
+    #poemTitle {
+        font-size: 2.2em; /* Smaller title on mobile */
+        max-width: 95vw; /* Allow more width on smaller screens */
+        text-underline-offset: 8px; /* Adjust underline offset for smaller font */
+    }
+
+    #poemContainer {
+        font-size: 1.2em; /* Smaller poem text on mobile */
+    }
+
+    #paragraphTextContainer {
+        font-size: 1em;
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    .continue-btn {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    #nextParagraphBtn {
+        bottom: 30px;
+    }
+
+    #finalImage { /* Responsive adjustments for final image */
+        max-width: 70%;
+        max-height: 50vh;
+    }
+
+    /* #finalCaption removed as it's now #finalMainLine */
+
+    #finalMainLine { /* Responsive adjustments for the main final line */
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .final-text-line { /* Responsive adjustments for sub-lines */
+        font-size: 1em;
+        margin-top: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .intro-box {
+        padding: 15px;
+    }
+    .intro-text {
+        font-size: 0.9em;
+    }
+    #poemTitle {
+        font-size: 1.8em;
+        padding: 15px 25px;
+    }
+    #poemContainer {
+        font-size: 1em;
+    }
+    #paragraphTextContainer {
+        font-size: 0.9em;
+        padding: 15px;
+    }
+
+    #finalImage { /* More responsive adjustments for final image */
+        max-width: 70%;
+        max-height: 30vh;
+    }
+
+    /* #finalCaption removed as it's now #finalMainLine */
+
+    #finalMainLine { /* More responsive adjustments for the main final line */
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        color: #FFD700;
+    }
+
+    .final-text-line { /* More responsive adjustments for sub-lines */
+        font-size: 0.9em;
+        margin-top: 6px;
+        color: #FFB6C1;
+        text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8)
+    }
+}
