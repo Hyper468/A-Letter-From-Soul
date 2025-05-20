@@ -169,7 +169,7 @@ function startSequence() {
 function showPoem() {
   const container = document.getElementById("poemContainer");
   let index = 0;
-  const poemCoupletDisplayDuration = 500; // 6 seconds per couplet (adjust as needed)
+  const poemCoupletDisplayDuration = 6000; // 6 seconds per couplet (adjust as needed)
 
   function showNextCouplet() {
       container.innerHTML = ''; // Clear previous lines
